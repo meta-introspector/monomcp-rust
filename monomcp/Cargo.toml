@@ -1,0 +1,163 @@
+[workspace]
+resolver = "2"
+members = [
+    "monomcp-core",
+    "MoCoPr",
+    "agentic/crates/agentic-core",
+    "agentic/crates/agentic-tui",
+    "agentic/crates/starlit-gui",
+    "mcp-attr/codegen",
+    "mcp-attr/mcp-attr-macros",
+    "mcp-attr/mcp-attr",
+    "mcp-discovery",
+    "memkb-mcp-rust",
+    "paiml-mcp-agent-toolkit/server",
+    "ramparts",
+    "rmcp-agent",
+    "rust-mcp-filesystem",
+    "rust-mcp-sdk/crates/rust-mcp-macros",
+    "rust-mcp-sdk/crates/rust-mcp-sdk",
+    "rust-mcp-sdk/crates/rust-mcp-transport",
+    "rust-mcp-sdk/examples/simple-mcp-client",
+    "rust-mcp-sdk/examples/simple-mcp-client-core",
+    "rust-mcp-sdk/examples/hello-world-mcp-server",
+    "rust-mcp-sdk/examples/hello-world-mcp-server-core",
+    "rust-mcp-sdk/examples/hello-world-server-streamable-http",
+    "rust-mcp-sdk/examples/hello-world-server-core-streamable-http",
+    "rust-mcp-sdk/examples/simple-mcp-client-sse",
+    "rust-mcp-sdk/examples/simple-mcp-client-core-sse",
+    "simd-kernels",
+    "siumai",
+    "turbomcp",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "MIT OR Apache-2.0"
+authors = ["Eric Evans <ciresnave@gmail.com>"]
+repository = "https://github.com/ciresnave/mocopr"
+homepage = "https://github.com/ciresnave/mocopr"
+documentation = "https://docs.rs/mocopr"
+description = "A comprehensive Rust implementation of the Model Context Protocol (MCP)"
+keywords = ["mcp", "model-context", "ai", "llm", "jsonrpc"]
+categories = ["api-bindings", "network-programming"]
+
+[workspace.dependencies]
+# MoCoPr dependencies
+serde = { version = "1.0.197", features = ["derive", "rc"] }
+serde_json = { version = "1.0.115", features = ["raw_value", "preserve_order"] }
+tokio = { version = "1.37.0", features = ["full"] }
+anyhow = "1.0.82"
+thiserror = "1.0.61"
+uuid = { version = "1.9.1", features = ["v4", "serde"] }
+chrono = { version = "0.4.38", features = ["serde"] }
+url = { version = "2.0", features = ["serde"] }
+async-trait = "0.1.80"
+futures = "0.3.30"
+tracing = "0.1.41"
+tracing-subscriber = { version = "0.3.19", features = ["env-filter", "std", "fmt", "json", "tracing-log"] }
+reqwest = { version = "0.12.5", default-features = false, features = ["json", "stream", "rustls-tls", "http2", "brotli", "gzip", "cookies", "multipart"] }
+tokio-tungstenite = { version = "0.23", features = ["native-tls"] }
+smallvec = { version = "1.15.1", features = ["serde"] }
+tower = { version = "0.5", features = ["full"] }
+tower-http = { version = "0.5", features = ["cors", "trace", "full"] }
+axum = { version = "0.8", features = ["ws", "tracing", "macros"] }
+tokio-process = "0.2"
+proc-macro2 = "1.0"
+quote = "1.0"
+syn = { version = "2.0", features = ["full"] }
+tokio-test = "0.4"
+criterion = { version = "0.5", features = ["html_reports"] }
+rayon = "1.0"
+num_cpus = "1.16"
+
+# agentic dependencies
+crossterm = "0.27.0"
+figment = { version = "0.10.19", features = ["toml", "env"] }
+ratatui = { version = "0.26.2", features = ["crossterm"] }
+toml = "0.8.12"
+taffy = "0.4.0"
+directories = "5.0.1"
+strum = { version = "0.27", features = ["derive"] }
+strum_macros = "0.26.3"
+itertools = "0.13.0"
+lazy_static = "1.5.0"
+signal-hook = "0.3.17"
+textwrap = "0.16.1"
+unicode-width = "0.1.13"
+
+# rust-mcp-sdk dependencies
+rust-mcp-transport = { version = "0.5.0", path = "rust-mcp-sdk/crates/rust-mcp-transport", default-features = false }
+rust-mcp-sdk = { version = "0.5.0", path = "rust-mcp-sdk/crates/rust-mcp-sdk", default-features = false }
+rust-mcp-macros = { version = "0.5.1", path = "rust-mcp-sdk/crates/rust-mcp-macros", default-features = false }
+rust-mcp-schema = { version = "0.7", default-features = false }
+tokio-stream = "0.1"
+rustls = "0.23"
+tokio-rustls = "0.26"
+axum-server = { version = "0.7" }
+bytes = "1.10"
+
+# turbomcp dependencies
+tokio-util = { version = "0.7", features = ["full"] }
+pin-project-lite = "0.2"
+walkdir = "2.4"
+rmp-serde = "1.1"
+sonic-rs = "0.3"
+simd-json = "0.13"
+bincode = "1.3"
+serde_cbor = "0.11"
+schemars = { version = "0.8", features = ["chrono", "uuid1"] }
+jsonschema = "0.17"
+hyper = { version = "1.0", features = ["full"] }
+hyper-util = { version = "0.1", features = ["full"] }
+
+miette = { version = "7.0", features = ["fancy"] }
+color-eyre = "0.6"
+tracing-opentelemetry = "0.22"
+opentelemetry = { version = "0.21", features = ["rt-tokio"] }
+opentelemetry-otlp = "0.14"
+metrics = "0.22"
+metrics-exporter-prometheus = "0.13"
+parking_lot = "0.12"
+dashmap = "5.5"
+crossbeam = "0.8"
+crossbeam-channel = "0.5"
+flume = "0.11"
+config = "0.14"
+clap = { version = "4.5", features = ["derive", "env", "color"] }
+clap_complete = "4.4"
+ring = "0.17"
+base64 = "0.22"
+
+jsonwebtoken = "9.2"
+time = { version = "0.3", features = ["serde", "macros"] }
+compact_str = { version = "0.7", features = ["serde"] }
+ahash = "0.8"
+once_cell = "1.19"
+arc-swap = "1.6"
+proptest = "1.4"
+wiremock = "0.5"
+pretty_assertions = "1.4"
+insta = { version = "1.34", features = ["json", "redactions"] }
+rand = "0.8"
+quickcheck = "1.0"
+quickcheck_macros = "1.0"
+mock_instant = "0.3"
+serial_test = "3.0"
+tempfile = "3.8"
+sha2 = "0.10"
+doc-comment = "0.3"
+
+# mcp-attr dependencies
+uri-template-ex = "0.0.2"
+
+# mcp-discovery dependencies
+regex = "1.11.1"
+
+# ramparts dependencies
+dirs = "6.0"
+futures-util = "0.3.31"
+
+[workspace.lints.rust]
+dead_code = "warn"
