@@ -12,7 +12,7 @@ members = [
     "mcp-discovery",
     "memkb-mcp-rust",
     "paiml-mcp-agent-toolkit/server",
-    "ramparts",
+#    "ramparts", needs cranlift and crashes
     "rmcp-agent",
     "rust-mcp-filesystem",
     "rust-mcp-sdk/crates/rust-mcp-macros",
@@ -161,3 +161,28 @@ futures-util = "0.3.31"
 
 [workspace.lints.rust]
 dead_code = "warn"
+
+[profile.dev]
+opt-level = 1
+debug = true
+overflow-checks = true
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = true
+
+[profile.bench]
+inherits = "release"
+debug = true
+strip = false
+
+[profile.test]
+opt-level = 1
+debug = 2
+
+[profile.dist]
+inherits = "release"
+lto = "thin"
