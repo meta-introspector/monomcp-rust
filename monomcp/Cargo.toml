@@ -53,6 +53,7 @@ anyhow = "1.0.82"
 thiserror = "1.0.61"
 uuid = { version = "1.9.1", features = ["v4", "serde"] }
 chrono = { version = "0.4.41", features = ["serde"] }
+arrow-arith = { version = "56.1.0", path = "vendor/arrow-rs/arrow-arith" }
 url = { version = "2.0", features = ["serde"] }
 async-trait = "0.1.80"
 futures = "0.3.30"
@@ -191,4 +192,3 @@ lto = "thin"
 
 [patch.crates-io]
 cargo-platform = { path = "vendor/cargo-platform/crates/cargo-platform" }
-arrow-arith = { path = "vendor/arrow-arith-53.4.0" }

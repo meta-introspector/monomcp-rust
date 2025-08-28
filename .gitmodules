@@ -85,3 +85,6 @@
 [submodule "monomcp/vendor/hugging-face-dataset-validator-rust"]
 	path = monomcp/vendor/hugging-face-dataset-validator-rust
 	url = https://github.com/meta-introspector/hugging-face-dataset-validator-rust
+[submodule "monomcp/vendor/arrow-rs"]
+	path = monomcp/vendor/arrow-rs
+	url = https://github.com/apache/arrow-rs
