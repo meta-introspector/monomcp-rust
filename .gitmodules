@@ -39,31 +39,34 @@
 	url = https://github.com/meta-introspector/simd-kernels
 [submodule "monomcp/turbomcp"]
 	path = monomcp/turbomcp
-	url = https://github.com/Epistates/turbomcp
+	#url = https://github.com/Epistates/turbomcp
+	url = https://github.com/meta-introspector/turbomcp
 [submodule "monomcp/agentic"]
 	path = monomcp/agentic
-	url = https://github.com/gitcoder89431/agentic
+#	url = https://github.com/gitcoder89431/agentic
+	url = https://github.com/meta-introspector/agentic
 [submodule "monomcp/MoCoPr"]
 	path = monomcp/MoCoPr
-	url = https://github.com/ciresnave/MoCoPr.git
+#	url = https://github.com/ciresnave/MoCoPr.git
+	url = https://github.com/meta-introspector/MoCoPr.git
 [submodule "monomcp/mcp-attr"]
 	path = monomcp/mcp-attr
-	url = https://github.com/frozenlib/mcp-attr.git
+	url = https://github.com/meta-introspector/mcp-attr.git
 [submodule "monomcp/paiml-mcp-agent-toolkit"]
 	path = monomcp/paiml-mcp-agent-toolkit
-	url = https://github.com/paiml/paiml-mcp-agent-toolkit.git
+	url = https://github.com/meta-introspector/paiml-mcp-agent-toolkit.git
 [submodule "monomcp/mcp-discovery"]
 	path = monomcp/mcp-discovery
-	url = https://github.com/rust-mcp-stack/mcp-discovery.git
+	url = https://github.com/meta-introspector/mcp-discovery.git
 [submodule "monomcp/siumai"]
 	path = monomcp/siumai
-	url = https://github.com/YumchaLabs/siumai.git
+	url = https://github.com/meta-introspector/siumai.git
 [submodule "monomcp/rust-mcp-filesystem"]
 	path = monomcp/rust-mcp-filesystem
-	url = https://github.com/rust-mcp-stack/rust-mcp-filesystem.git
+	url = https://github.com/meta-introspector/rust-mcp-filesystem.git
 [submodule "monomcp/rust-mcp-sdk"]
 	path = monomcp/rust-mcp-sdk
-	url = https://github.com/rust-mcp-stack/rust-mcp-sdk.git
+	url = https://github.com/meta-introspector/rust-mcp-sdk.git
 [submodule "monomcp/memkb-mcp-rust"]
 	path = monomcp/memkb-mcp-rust
 	url = https://github.com/meta-introspector/memkb-mcp-rust
@@ -72,7 +75,7 @@
 	url = https://github.com/meta-introspector/simd-kernels
 [submodule "monomcp/ramparts"]
 	path = monomcp/ramparts
-	url = https://github.com/getjavelin/ramparts.git
+	url = https://github.com/meta-introspector/ramparts.git
 [submodule "monomcp/rmcp-agent"]
 	path = monomcp/rmcp-agent
-	url = https://github.com/ZBcheng/rmcp-agent.git
+	url = https://github.com/meta-introspector/rmcp-agent.git
