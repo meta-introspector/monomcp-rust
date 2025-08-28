@@ -79,3 +79,9 @@
 [submodule "monomcp/rmcp-agent"]
 	path = monomcp/rmcp-agent
 	url = https://github.com/meta-introspector/rmcp-agent.git
+[submodule "monomcp/vendor/cargo-platform"]
+	path = monomcp/vendor/cargo-platform
+	url = https://github.com/rust-lang/cargo.git
+[submodule "monomcp/vendor/hugging-face-dataset-validator-rust"]
+	path = monomcp/vendor/hugging-face-dataset-validator-rust
+	url = https://github.com/meta-introspector/hugging-face-dataset-validator-rust
