@@ -18,6 +18,7 @@ The `monomcp` workspace is organized into several functional groups:
 *   **`rust-mcp-sdk/`**: The Rust SDK for MCP, including `rust-mcp-macros`, `rust-mcp-sdk` itself, and `rust-mcp-transport`, along with various examples (`simple-mcp-client`, `hello-world-mcp-server`, etc.).
 *   **`siumai/`**: (Purpose to be further defined, likely a specific utility or component).
 *   **`turbomcp/`**: Suggests performance-oriented or accelerated MCP functionalities.
+*   **`fuzzing/`**: Contains crates related to fuzzing infrastructure, including `mermaid_fuzzer_crate` (for Mermaid diagram fuzzing) and `hash_repro_crate` (for minimal hash issue reproduction).
 
 ## Workspace Dependencies
 

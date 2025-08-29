@@ -63,6 +63,32 @@ Here are some CRQs (Change Requests) and tasks that have emerged from our recent
 *   **CRQ: Export `project_reporter` Output to Different Formats**
     *   **Description:** Add functionality to `project_reporter` to export the generated table to other formats like CSV, JSON, or Markdown.
 
+### Category: `project_reporter` Development
+
+*   **CRQ: Enhance `project_reporter` to Display Full Analysis Data**
+    *   **Description:** The `project_reporter` has been enhanced to read and display data from all generated Parquet files, including project metadata, lines of code, direct dependencies, build script presence, download counts, and commit counts. It now provides a more comprehensive overview of analyzed projects.
+    *   **Tasks:**
+        *   Update `project_reporter/src/main.rs` to read multiple Parquet files per project.
+        *   Design a comprehensive table or multiple tables to display the richer data.
+        *   Implement data aggregation and presentation logic.
+*   **CRQ: Add Filtering and Sorting to `project_reporter`**
+    *   **Description:** Implement command-line arguments for `project_reporter` to allow users to filter and sort the displayed project data (e.g., by version, description keywords, number of dependencies).
+    *   **Tasks:**
+        *   Integrate `clap` for command-line argument parsing.
+        *   Implement filtering and sorting logic on the loaded data.
+*   **CRQ: Export `project_reporter` Output to Different Formats**
+    *   **Description:** Add functionality to `project_reporter` to export the generated table to other formats like CSV, JSON, or Markdown.
+
+### Category: Fuzzing Infrastructure
+
+*   **CRQ: Establish Dedicated Mermaid Fuzzer Crate**
+    *   **Description:** Isolated Mermaid diagram fuzzer targets from `paiml-mcp-agent-toolkit/fuzz` into a new dedicated crate `monomcp/models/diagram/mermaid/fuzzing`. This resolved compilation issues related to `rustc-hash` version mismatches and provides a cleaner, isolated environment for fuzzing. A minimal reproduction crate (`monomcp/models/diagram/mermaid/hash_repro_crate`) was also created to diagnose the hash type mismatch.
+    *   **Status:** Implemented and verified.
+
+### General Project Updates
+
+*   **Submodule Synchronization:** All project submodules have been synchronized with their respective `meta-introspector` forks, resolving local divergences and ensuring all changes are pushed upstream. This included re-adding `monomcp/simd-kernels` cleanly.
+
 ### Category: Cargo Integration (Long-Term Vision)
 
 *   **CRQ: Integrate `cargo2hf_extractor` as a New Cargo Subcommand**
