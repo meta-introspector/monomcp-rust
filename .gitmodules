@@ -88,3 +88,6 @@
 [submodule "monomcp/vendor/arrow-rs"]
 	path = monomcp/vendor/arrow-rs
 	url = https://github.com/apache/arrow-rs
+[submodule "monomcp/vendor/cargo-rust-lang"]
+	path = monomcp/vendor/cargo-rust-lang
+	url = https://github.com/rust-lang/cargo.git

@@ -1,0 +1,10 @@
+[package]
+name = "project_reporter"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+arrow = { version = "56.1.0", path = "../monomcp/vendor/arrow-rs/arrow" }
+parquet = { version = "56.1.0", path = "../monomcp/vendor/arrow-rs/parquet" }
+anyhow = "1.0"
+tokio = { version = "1.0", features = ["full"] }

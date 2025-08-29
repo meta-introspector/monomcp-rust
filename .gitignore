@@ -1,6 +1,8 @@
 sessions/
 monomcp/target/
 submodules.txt
+target/
+tree.txt
 
 # -*- mode: gitignore; -*-
 *~
@@ -50,4 +52,3 @@ flycheck_*.el
 
 # network security
 /network-security.data
-

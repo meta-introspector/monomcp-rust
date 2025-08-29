@@ -192,3 +192,7 @@ lto = "thin"
 
 [patch.crates-io]
 cargo-platform = { path = "vendor/cargo-platform/crates/cargo-platform" }
+cargo-util = { path = "vendor/cargo-rust-lang/crates/cargo-util" }
+cargo-util-schemas = { path = "vendor/cargo-rust-lang/crates/cargo-util-schemas" }
+crates-io = { path = "vendor/cargo-rust-lang/crates/crates-io" }
+cargo = { path = "vendor/cargo-rust-lang" }
