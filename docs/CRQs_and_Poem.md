@@ -10,35 +10,35 @@ Here are some CRQs (Change Requests) and tasks that have emerged from our recent
     *   **Description:** The `apache/arrow-rs` library has been integrated as a vendored submodule (`monomcp/vendor/arrow-rs`). This provides the foundational Arrow data structures and Parquet file format support, which are crucial for the `hf-dataset-validator`'s ability to generate and process analysis data in `data.parquet` files.
 
 *   **CRQ: Implement Comprehensive `DependencyAnalysis` in `cargo2hf_extractor`**
-    *   **Description:** The `extract_dependency_analysis` function in `monomcp/vendor/hugging-face-dataset-validator-rust/src/cargo2hf_extractor.rs` is now integrated into the `cargo2hf` tool, and the framework for generating `dependency_analysis-phase/data.parquet` files is in place. The next step is to fully implement the logic to extract detailed dependency information (direct, transitive, dev, build dependencies, version requirements, resolved versions, features, sources) using `cargo metadata` or direct Cargo internal APIs.
+    *   **Description:** The `extract_dependency_analysis` function in `monomcp/vendor/hugging-face-dataset-validator-rust/src/cargo2hf_extractor.rs` has been implemented to extract detailed dependency information using `cargo metadata`. It now populates the `dependency_analysis-phase/data.parquet` files with comprehensive dependency data.
     *   **Tasks:**
         *   Investigate `cargo metadata` output structure for comprehensive dependency data.
         *   Map `cargo metadata` output to `CargoProjectRecord`'s dependency fields.
         *   Implement parsing and data extraction logic in `extract_dependency_analysis`.
         *   Write unit tests for `extract_dependency_analysis`.
 *   **CRQ: Implement `SourceCodeAnalysis` in `cargo2hf_extractor`**
-    *   **Description:** The `extract_source_code_analysis` function is now integrated into the `cargo2hf` tool, and the framework for generating `source_code_analysis-phase/data.parquet` files is in place. The next step is to implement the logic to gather metrics like lines of code, file counts, function/struct/enum/trait counts, public API surface analysis, and estimated code complexity.
+    *   **Description:** The `extract_source_code_analysis` function has been implemented to gather basic source code metrics like lines of code and file counts. It populates `source_code_analysis-phase/data.parquet` files. Further work is needed for detailed complexity analysis and item counts.
     *   **Tasks:**
         *   Research suitable Rust parsing/analysis libraries (e.g., `syn`, `rust-analyzer`'s crates, `tree-sitter`).
         *   Define metrics and their extraction methods.
         *   Implement data extraction and populate `CargoProjectRecord` fields.
         *   Write unit tests.
 *   **CRQ: Implement `BuildAnalysis` in `cargo2hf_extractor`**
-    *   **Description:** The `extract_build_analysis` function is now integrated into the `cargo2hf` tool, and the framework for generating `build_analysis-phase/data.parquet` files is in place. The next step is to implement the logic to analyze build configurations, feature flag usage, and `build.rs` scripts.
+    *   **Description:** The `extract_build_analysis` function has been implemented to analyze build configurations, including the presence and lines of code of `build.rs` scripts, and extracts feature flags and targets from `Cargo.toml`. It populates `build_analysis-phase/data.parquet` files.
     *   **Tasks:**
         *   Understand `build.rs` execution and its impact on project metadata.
         *   Extract feature flag combinations and their usage.
         *   Analyze compilation profiles and settings.
         *   Write unit tests.
 *   **CRQ: Implement `EcosystemAnalysis` in `cargo2hf_extractor`**
-    *   **Description:** The `extract_ecosystem_analysis` function is now integrated into the `cargo2hf` tool, and the framework for generating `ecosystem_analysis-phase/data.parquet` files is in place. The next step is to implement the logic to gather data from `crates.io` (download counts, popularity) and GitHub (stars, forks, issues, last updated).
+    *   **Description:** The `extract_ecosystem_analysis` function has been implemented to gather ecosystem data from `crates.io` (download counts) and GitHub (stars, forks, issues, last updated). It populates `ecosystem_analysis-phase/data.parquet` files.
     *   **Tasks:**
         *   Research `crates.io` API and GitHub API for relevant data.
         *   Implement API calls and data parsing.
         *   Populate `CargoProjectRecord` fields.
         *   Write unit tests.
 *   **CRQ: Implement `VersionHistory` Analysis in `cargo2hf_extractor`**
-    *   **Description:** The `extract_version_history` function is now integrated into the `cargo2hf` tool, and the framework for generating `version_history-phase/data.parquet` files is in place. The next step is to implement the logic to analyze Git commit history, contributor counts, project age, and release frequency.
+    *   **Description:** The `extract_version_history` function has been implemented to analyze Git commit history, counting commits, unique contributors, and calculating project age. It populates `version_history-phase/data.parquet` files. Further work is needed for release frequency analysis.
     *   **Tasks:**
         *   Research `git2` crate for Git repository interaction.
         *   Implement Git history traversal and data extraction.
@@ -50,7 +50,7 @@ Here are some CRQs (Change Requests) and tasks that have emerged from our recent
 ### Category: `project_reporter` Development
 
 *   **CRQ: Enhance `project_reporter` to Display Full Analysis Data**
-    *   **Description:** The `project_reporter` now reads and displays data from `project_metadata-phase/data.parquet` files. The next step is to modify `project_reporter` to read and display data from all generated Parquet files (including dependency analysis, source code metrics, etc.), once those phases are fully implemented in `hf-dataset-validator`.
+    *   **Description:** The `project_reporter` has been enhanced to read and display data from all generated Parquet files, including project metadata, lines of code, direct dependencies, build script presence, download counts, and commit counts. It now provides a more comprehensive overview of analyzed projects.
     *   **Tasks:**
         *   Update `project_reporter/src/main.rs` to read multiple Parquet files per project.
         *   Design a comprehensive table or multiple tables to display the richer data.
@@ -66,7 +66,7 @@ Here are some CRQs (Change Requests) and tasks that have emerged from our recent
 ### Category: Cargo Integration (Long-Term Vision)
 
 *   **CRQ: Integrate `cargo2hf_extractor` as a New Cargo Subcommand**
-    *   **Description:** This is the ambitious long-term goal. The `cargo` repository has been vendored into `monomcp/vendor/cargo-rust-lang`, which is a significant step towards this CRQ. The next step is to integrate the fully implemented `cargo2hf_extractor` logic directly into this vendored `cargo` repository as a new subcommand (e.g., `cargo hf-export` or `cargo analyze-project`).
+    *   **Description:** The `cargo2hf_extractor` has been integrated as a new Cargo subcommand, `cargo hf-export`. This allows direct execution of the extraction logic via `cargo hf-export <project_path>`. The `cargo` repository was previously vendored into `monomcp/vendor/cargo-rust-lang` to enable this integration.
     *   **Tasks:**
         *   Deep dive into Cargo's internal architecture and command dispatch.
         *   Design the new subcommand's interface and arguments.
