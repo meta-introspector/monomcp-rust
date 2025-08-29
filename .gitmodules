@@ -90,3 +90,6 @@
 [submodule "monomcp/simd-kernels"]
 	path = monomcp/simd-kernels
 	url = https://github.com/meta-introspector/simd-kernels.git
+[submodule "monomcp/generative_modular_forms"]
+	path = monomcp/generative_modular_forms
+	url = https://github.com/meta-introspector/gen-mod-form

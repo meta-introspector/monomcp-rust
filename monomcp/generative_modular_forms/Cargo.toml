@@ -1,6 +1,0 @@
-[package]
-name = "generative_modular_forms"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
