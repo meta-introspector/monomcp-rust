@@ -45,6 +45,7 @@ members = [
     "project_reporter", # Add project_reporter as a member
     "monomcp/models/diagram/mermaid/fuzzing",
     "monomcp/models/diagram/mermaid/hash_repro_crate",
+    "monomcp/generative_modular_forms",
 ]
 
 [workspace.package]
