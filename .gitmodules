@@ -34,9 +34,7 @@
 [submodule "siumai"]
 	path = monomcp/siumai
 	url = https://github.com/YumchaLabs/siumai.git
-[submodule "simd-kernels"]
-	path = monomcp/simd-kernels
-	url = https://github.com/meta-introspector/simd-kernels
+
 [submodule "monomcp/turbomcp"]
 	path = monomcp/turbomcp
 	#url = https://github.com/Epistates/turbomcp
@@ -70,9 +68,7 @@
 [submodule "monomcp/memkb-mcp-rust"]
 	path = monomcp/memkb-mcp-rust
 	url = https://github.com/meta-introspector/memkb-mcp-rust
-[submodule "monomcp/simd-kernels"]
-	path = monomcp/simd-kernels
-	url = https://github.com/meta-introspector/simd-kernels
+
 [submodule "monomcp/ramparts"]
 	path = monomcp/ramparts
 	url = https://github.com/meta-introspector/ramparts.git
@@ -91,3 +87,6 @@
 [submodule "monomcp/vendor/cargo-rust-lang"]
 	path = monomcp/vendor/cargo-rust-lang
 	url = https://github.com/rust-lang/cargo.git
+[submodule "monomcp/simd-kernels"]
+	path = monomcp/simd-kernels
+	url = https://github.com/meta-introspector/simd-kernels.git
