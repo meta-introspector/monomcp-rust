@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Generator for Image/Video AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>AI Prompt Generator</h1>
+        <p>Generate prompts for various image and video AI models.</p>
+    </header>
+    <main>
+        <section class="generator-section">
+            <h2>Image Generator</h2>
+            <div class="input-group">
+                <label for="image-prompt">Prompt:</label>
+                <textarea id="image-prompt" rows="4" placeholder="e.g., A futuristic city at sunset, cyberpunk style, highly detailed"></textarea>
+            </div>
+            <div class="input-group">
+                <label for="image-model">Select Model:</label>
+                <select id="image-model">
+                    <option value="dalle">DALL-E (Simulated)</option>
+                    <option value="midjourney">Midjourney (Simulated)</option>
+                    <option value="stable-diffusion">Stable Diffusion (Simulated)</option>
+                </select>
+            </div>
+            <button id="generate-image">Generate Image</button>
+            <div class="output-area">
+                <h3>Generated URL:</h3>
+                <p id="image-output-url"></p>
+                <p class="note">This URL simulates sending data to an external AI. In a real scenario, a WASM driver would intercept this.</p>
+            </div>
+        </section>
+
+        <section class="generator-section">
+            <h2>Video Generator</h2>
+            <div class="input-group">
+                <label for="video-prompt">Prompt:</label>
+                <textarea id="video-prompt" rows="4" placeholder="e.g., A serene forest with glowing flora, time-lapse, magical atmosphere"></textarea>
+            </div>
+            <div class="input-group">
+                <label for="video-model">Select Model:</label>
+                <select id="video-model">
+                    <option value="runwayml">RunwayML (Simulated)</option>
+                    <option value="pika">Pika (Simulated)</option>
+                </select>
+            </div>
+            <button id="generate-video">Generate Video</button>
+            <div class="output-area">
+                <h3>Generated URL:</h3>
+                <p id="video-output-url"></p>
+                <p class="note">This URL simulates sending data to an external AI. In a real scenario, a WASM driver would intercept this.</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 AI Prompt Generator. Powered by Gemini.</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
