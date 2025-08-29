@@ -27,8 +27,6 @@ members = [
     "monomcp/rust-mcp-sdk/examples/simple-mcp-client-sse",
     "monomcp/rust-mcp-sdk/examples/simple-mcp-client-core-sse",
     "monomcp/siumai",
-    "monomcp/simd-kernels",
-    "monomcp/paiml-mcp-agent-toolkit/fuzz",
     "monomcp/MoCoPr/mocopr-client",
     "monomcp/MoCoPr/mocopr-core",
     "monomcp/MoCoPr/mocopr-macros",
@@ -45,6 +43,8 @@ members = [
     "monomcp/turbomcp/demo",
     "monomcp/vendor/hugging-face-dataset-validator-rust",
     "project_reporter", # Add project_reporter as a member
+    "monomcp/models/diagram/mermaid/fuzzing",
+    "monomcp/models/diagram/mermaid/hash_repro_crate",
 ]
 
 [workspace.package]

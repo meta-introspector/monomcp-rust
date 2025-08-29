@@ -1,0 +1,22 @@
+[package]
+name = "mermaid_fuzzer_crate"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+libfuzzer-sys = "0.4"
+arbitrary = { version = "1.0", features = ["derive"] }
+pmat = { path = "../../../../paiml-mcp-agent-toolkit/server" }
+rustc-hash = "2.1"
+
+[[bin]]
+name = "fuzz_mermaid_performance"
+path = "fuzz_targets/fuzz_mermaid_performance.rs"
+
+[[bin]]
+name = "fuzz_mermaid_escaping"
+path = "fuzz_targets/fuzz_mermaid_escaping.rs"
+
+[[bin]]
+name = "fuzz_mermaid_generation"
+path = "fuzz_targets/fuzz_mermaid_generation.rs"

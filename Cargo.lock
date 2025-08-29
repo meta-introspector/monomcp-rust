@@ -987,26 +987,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "blas"
-version = "0.23.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "280f3f48ac4edf086d59c7aa71fb28b78df2b14db8f591fb4eb29b88b77ac6ad"
-dependencies = [
- "blas-sys",
- "libc",
- "num-complex",
-]
-
-[[package]]
-name = "blas-sys"
-version = "0.8.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b49cc48acc7ead5c33d2e3cac9c47e55bfd04c929abd1456459084a8c8cdf2cb"
-dependencies = [
- "libc",
-]
-
-[[package]]
 name = "block-buffer"
 version = "0.10.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3080,6 +3060,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "hash_repro_crate"
+version = "0.1.0"
+dependencies = [
+ "rustc-hash 1.1.0",
+]
+
+[[package]]
 name = "hashbrown"
 version = "0.14.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4148,26 +4135,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "lapack"
-version = "0.20.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "508f7f48955e5e4ec3feb771a4d981c6e59ff2400d750cf41733a3350fdb2dc4"
-dependencies = [
- "lapack-sys",
- "libc",
- "num-complex",
-]
-
-[[package]]
-name = "lapack-sys"
-version = "0.15.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "314b879030845b68571809a6978e52d3b67ac5fba07e77b1b317b484092e2fb5"
-dependencies = [
- "libc",
-]
-
-[[package]]
 name = "lazy_static"
 version = "1.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4776,6 +4743,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "mermaid_fuzzer_crate"
+version = "0.1.0"
+dependencies = [
+ "arbitrary",
+ "libfuzzer-sys",
+ "pmat",
+ "rustc-hash 2.1.1",
+]
+
+[[package]]
 name = "metrics"
 version = "0.22.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4829,15 +4806,6 @@ checksum = "f7c44f8e672c00fe5308fa235f821cb4198414e1c77935c1ab6948d3fd78550e"
 dependencies = [
  "mime",
  "unicase",
-]
-
-[[package]]
-name = "minarrow"
-version = "0.1.7"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8465ebf0a56d34fe1adc6a91bab691742b14666e01e4a82cbac80848a8bf8fd2"
-dependencies = [
- "num-traits",
 ]
 
 [[package]]
@@ -5623,15 +5591,6 @@ name = "owo-colors"
 version = "4.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "48dd4f4a2c8405440fd0462561f0e5806bd0f77e86f51c761481bdd4018b545e"
-
-[[package]]
-name = "paiml-mcp-agent-toolkit-fuzz"
-version = "0.0.0"
-dependencies = [
- "arbitrary",
- "libfuzzer-sys",
- "pmat",
-]
 
 [[package]]
 name = "parking"
@@ -8169,26 +8128,6 @@ dependencies = [
  "serde_json",
  "simdutf8",
  "value-trait",
-]
-
-[[package]]
-name = "simd-kernels"
-version = "0.1.0"
-dependencies = [
- "ahash",
- "blas",
- "cc",
- "lapack",
- "memchr",
- "minarrow",
- "num-complex",
- "num-traits",
- "ordered-float 5.0.0",
- "rand 0.8.5",
- "regex",
- "ryu",
- "serde",
- "serde_json",
 ]
 
 [[package]]
