@@ -1,34 +1,50 @@
 [workspace]
 resolver = "2"
 members = [
-    "monomcp-core",
-    "MoCoPr",
-    "agentic/crates/agentic-core",
-    "agentic/crates/agentic-tui",
-    "agentic/crates/starlit-gui",
-    "mcp-attr/codegen",
-    "mcp-attr/mcp-attr-macros",
-    "mcp-attr/mcp-attr",
-    "mcp-discovery",
-    "memkb-mcp-rust",
-    "paiml-mcp-agent-toolkit/server",
-#    "ramparts", needs cranlift and crashes
-    "rmcp-agent",
-    "rust-mcp-filesystem",
-    "rust-mcp-sdk/crates/rust-mcp-macros",
-    "rust-mcp-sdk/crates/rust-mcp-sdk",
-    "rust-mcp-sdk/crates/rust-mcp-transport",
-    "rust-mcp-sdk/examples/simple-mcp-client",
-    "rust-mcp-sdk/examples/simple-mcp-client-core",
-    "rust-mcp-sdk/examples/hello-world-mcp-server",
-    "rust-mcp-sdk/examples/hello-world-mcp-server-core",
-    "rust-mcp-sdk/examples/hello-world-server-streamable-http",
-    "rust-mcp-sdk/examples/hello-world-server-core-streamable-http",
-    "rust-mcp-sdk/examples/simple-mcp-client-sse",
-    "rust-mcp-sdk/examples/simple-mcp-client-core-sse",
-    "siumai",
-    "turbomcp",
-    "vendor/hugging-face-dataset-validator-rust",
+    "monomcp/monomcp-core",
+    "monomcp/MoCoPr",
+    "monomcp/agentic/crates/agentic-core",
+    "monomcp/agentic/crates/agentic-tui",
+    "monomcp/agentic/crates/starlit-gui",
+    "monomcp/mcp-attr/codegen",
+    "monomcp/mcp-attr/mcp-attr-macros",
+    "monomcp/mcp-attr/mcp-attr",
+    "monomcp/mcp-discovery",
+    "monomcp/memkb-mcp-rust",
+    "monomcp/paiml-mcp-agent-toolkit/server",
+#    "monomcp/ramparts", needs cranlift and crashes
+    "monomcp/rmcp-agent",
+    "monomcp/rust-mcp-filesystem",
+    "monomcp/rust-mcp-sdk/crates/rust-mcp-macros",
+    "monomcp/rust-mcp-sdk/crates/rust-mcp-sdk",
+    "monomcp/rust-mcp-sdk/crates/rust-mcp-transport",
+    "monomcp/rust-mcp-sdk/examples/simple-mcp-client",
+    "monomcp/rust-mcp-sdk/examples/simple-mcp-client-core",
+    "monomcp/rust-mcp-sdk/examples/hello-world-mcp-server",
+    "monomcp/rust-mcp-sdk/examples/hello-world-mcp-server-core",
+    "monomcp/rust-mcp-sdk/examples/hello-world-server-streamable-http",
+    "monomcp/rust-mcp-sdk/examples/hello-world-server-core-streamable-http",
+    "monomcp/rust-mcp-sdk/examples/simple-mcp-client-sse",
+    "monomcp/rust-mcp-sdk/examples/simple-mcp-client-core-sse",
+    "monomcp/siumai",
+    "monomcp/simd-kernels",
+    "monomcp/paiml-mcp-agent-toolkit/fuzz",
+    "monomcp/MoCoPr/mocopr-client",
+    "monomcp/MoCoPr/mocopr-core",
+    "monomcp/MoCoPr/mocopr-macros",
+    "monomcp/MoCoPr/mocopr-rbac",
+    "monomcp/MoCoPr/mocopr-server",
+    "monomcp/turbomcp/crates/turbomcp",
+    "monomcp/turbomcp/crates/turbomcp-cli",
+    "monomcp/turbomcp/crates/turbomcp-client",
+    "monomcp/turbomcp/crates/turbomcp-core",
+    "monomcp/turbomcp/crates/turbomcp-macros",
+    "monomcp/turbomcp/crates/turbomcp-protocol",
+    "monomcp/turbomcp/crates/turbomcp-server",
+    "monomcp/turbomcp/crates/turbomcp-transport",
+    "monomcp/turbomcp/demo",
+    "monomcp/vendor/hugging-face-dataset-validator-rust",
+    "project_reporter", # Add project_reporter as a member
 ]
 
 [workspace.package]
@@ -53,7 +69,7 @@ anyhow = "1.0.82"
 thiserror = "1.0.61"
 uuid = { version = "1.9.1", features = ["v4", "serde"] }
 chrono = { version = "0.4.41", features = ["serde"] }
-arrow-arith = { version = "56.1.0", path = "vendor/arrow-rs/arrow-arith" }
+arrow-arith = { version = "56.1.0", path = "monomcp/vendor/arrow-rs/arrow-arith" }
 url = { version = "2.0", features = ["serde"] }
 async-trait = "0.1.80"
 futures = "0.3.30"
@@ -91,9 +107,9 @@ unicode-width = "0.1.13"
 #chrono = { version = "0.4.38", features = ["serde"] }
 
 # rust-mcp-sdk dependencies
-rust-mcp-transport = { version = "0.5.0", path = "rust-mcp-sdk/crates/rust-mcp-transport", default-features = false }
-rust-mcp-sdk = { version = "0.5.0", path = "rust-mcp-sdk/crates/rust-mcp-sdk", default-features = false }
-rust-mcp-macros = { version = "0.5.1", path = "rust-mcp-sdk/crates/rust-mcp-macros", default-features = false }
+rust-mcp-transport = { version = "0.5.0", path = "monomcp/rust-mcp-sdk/crates/rust-mcp-transport", default-features = false }
+rust-mcp-sdk = { version = "0.5.0", path = "monomcp/rust-mcp-sdk/crates/rust-mcp-sdk", default-features = false }
+rust-mcp-macros = { version = "0.5.1", path = "monomcp/rust-mcp-sdk/crates/rust-mcp-macros", default-features = false }
 rust-mcp-schema = { version = "0.7", default-features = false }
 tokio-stream = "0.1"
 rustls = "0.23"
@@ -191,8 +207,8 @@ inherits = "release"
 lto = "thin"
 
 [patch.crates-io]
-cargo-platform = { path = "vendor/cargo-platform/crates/cargo-platform" }
-cargo-util = { path = "vendor/cargo-rust-lang/crates/cargo-util" }
-cargo-util-schemas = { path = "vendor/cargo-rust-lang/crates/cargo-util-schemas" }
-crates-io = { path = "vendor/cargo-rust-lang/crates/crates-io" }
-cargo = { path = "vendor/cargo-rust-lang" }
+cargo-platform = { path = "monomcp/vendor/cargo-platform/crates/cargo-platform" }
+cargo-util = { path = "monomcp/vendor/cargo-rust-lang/crates/cargo-util" }
+cargo-util-schemas = { path = "monomcp/vendor/cargo-rust-lang/crates/cargo-util-schemas" }
+crates-io = { path = "monomcp/vendor/cargo-rust-lang/crates/crates-io" }
+cargo = { path = "monomcp/vendor/cargo-rust-lang" }
