@@ -1,0 +1,16 @@
+feat: Vendorize external repositories as Git submodules
+
+This commit integrates several external Rust repositories as Git submodules
+under `monomcp/vendor/`, pointing them to their respective `meta-introspector`
+forks. This ensures better control over dependencies and facilitates
+custom modifications within the project's monorepo structure.
+
+The following repositories have been added/updated as submodules:
+- `monomcp/vendor/smallvec` (from `https://github.com/meta-introspector/rust-smallvec`)
+- `monomcp/vendor/ar_archive_writer` (from `https://github.com/meta-introspector/ar_archive_writer`)
+- `monomcp/vendor/rustc-stable-hash` (from `https://github.com/meta-introspector/rustc-stable-hash`)
+- `monomcp/vendor/cargo-rust-lang` (updated to latest commit)
+- `monomcp/vendor/tracing-vendor/tracing` (updated to latest commit)
+
+This change aligns with the project's goal of deep bootstrap and formal
+verification by bringing critical dependencies under direct version control.
