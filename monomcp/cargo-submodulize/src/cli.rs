@@ -24,4 +24,7 @@ pub struct Cli {
     /// Stop processing after a specified number of errors.
     #[arg(long)]
     pub max_errors: Option<usize>,
+    /// Report on the cache and results so far.
+    #[arg(long)]
+    pub report: Option<String>,
 }

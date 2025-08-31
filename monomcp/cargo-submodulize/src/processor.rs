@@ -133,7 +133,7 @@ pub fn process_cargo_toml(
                     }
                 }
             } else {
-                eprintln!("Repository not found for crate: {}", name);
+                return Err(anyhow::anyhow!("Repository not found for crate: {}", name));
             }
 
             processed_crates.push(ProcessedCrateInfo {

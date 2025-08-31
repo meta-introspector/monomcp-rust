@@ -49,6 +49,27 @@ fn main() -> Result<()> {
     let mut processed_crates_info: Vec<ProcessedCrateInfo> = Vec::new();
     let mut error_count = 0; // Initialize error count
 
+    if let Some(report_path) = cli.report {
+        let report_content = if cache.is_empty() {
+            "Cache is empty.".to_string()
+        } else {
+            let mut table = String::new();
+            table.push_str("| Crate Name | Repository URL |\n");
+            table.push_str("|---|---|
+");
+            for (crate_name, crate_info) in &cache {
+                let repo_url = crate_info.crate_data.repository.as_deref().unwrap_or("N/A");
+                table.push_str(&format!("| {} | {} |\n", crate_name, repo_url));
+            }
+            table
+        };
+
+        let full_report = format!("\n--- Cache Report ---\n{}\n--------------------\n", report_content);
+
+        std::fs::write(&report_path, full_report)?;
+        println!("Cache report written to {}.", report_path);
+    }
+
     let cargo_toml_paths: Vec<String> = if let Some(scan_file_list_path) = cli.scan_file_list {
         std::fs::read_to_string(&scan_file_list_path)?
             .lines()
