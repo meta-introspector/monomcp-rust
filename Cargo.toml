@@ -41,6 +41,7 @@ members = [
     "monomcp/turbomcp/crates/turbomcp-server",
     "monomcp/turbomcp/crates/turbomcp-transport",
     "monomcp/turbomcp/demo",
+    "monomcp/cargo-submodulize",
     "monomcp/vendor/hugging-face-dataset-validator-rust",
     "project_reporter", # Add project_reporter as a member
     "monomcp/models/diagram/mermaid/fuzzing",
