@@ -93,3 +93,6 @@
 [submodule "monomcp/generative_modular_forms"]
 	path = monomcp/generative_modular_forms
 	url = https://github.com/meta-introspector/gen-mod-form
+[submodule "monomcp/vendor/tracing-vendor/tracing"]
+	path = monomcp/vendor/tracing-vendor/tracing
+	url = https://github.com/tokio-rs/tracing.git
