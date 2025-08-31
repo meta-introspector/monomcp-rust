@@ -96,3 +96,12 @@
 [submodule "monomcp/vendor/tracing-vendor/tracing"]
 	path = monomcp/vendor/tracing-vendor/tracing
 	url = https://github.com/tokio-rs/tracing.git
+[submodule "monomcp/vendor/smallvec"]
+	path = monomcp/vendor/smallvec
+	url = https://github.com/meta-introspector/rust-smallvec
+[submodule "monomcp/vendor/ar_archive_writer"]
+	path = monomcp/vendor/ar_archive_writer
+	url = https://github.com/meta-introspector/ar_archive_writer
+[submodule "monomcp/vendor/rustc-stable-hash"]
+	path = monomcp/vendor/rustc-stable-hash
+	url = https://github.com/meta-introspector/rustc-stable-hash
