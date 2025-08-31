@@ -1,141 +1,124 @@
-
-use clap::Parser;
+mod cli;
+mod processor;
+mod utils;
+use anyhow::Result;
+use std::collections::HashMap;
 use reqwest::blocking::Client;
-use serde::Deserialize;
-use std::process::{Command, Stdio};
-use toml_edit::{DocumentMut, value, Item};
+use clap::Parser;
+use cli::Cli;
+use processor::{process_cargo_toml, CrateResponse, ProcessedCrateInfo};
+use std::fs;
+use std::io::{self};
 
-#[derive(Parser)]
-#[command(version, about, long_about = None)]
-struct Cli {
-    #[arg(short, long)]
-    path: Option<String>,
+const CACHE_FILE: &str = "submodulize_cache.json";
+
+/// Loads the cache from a JSON file.
+fn load_cache() -> HashMap<String, CrateResponse> {
+    match fs::read_to_string(CACHE_FILE) {
+        Ok(data) => serde_json::from_str(&data).unwrap_or_else(|err| {
+            eprintln!("Warning: Could not parse cache file {}: {}", CACHE_FILE, err);
+            HashMap::new()
+        }),
+        Err(err) if err.kind() == io::ErrorKind::NotFound => {
+            println!("Cache file {} not found, starting with empty cache.", CACHE_FILE);
+            HashMap::new()
+        },
+        Err(err) => {
+            eprintln!("Warning: Could not read cache file {}: {}", CACHE_FILE, err);
+            HashMap::new()
+        }
+    }
 }
 
-#[derive(Deserialize, Debug)]
-struct CrateResponse {
-    #[serde(rename = "crate")]
-    crate_data: CrateData,
+/// Saves the cache to a JSON file.
+fn save_cache(cache: &HashMap<String, CrateResponse>) -> Result<()> {
+    let data = serde_json::to_string_pretty(cache)?;
+    fs::write(CACHE_FILE, data)?;
+    println!("Cache saved to {}.", CACHE_FILE);
+    Ok(())
 }
 
-#[derive(Deserialize, Debug)]
-struct CrateData {
-    repository: Option<String>,
-}
-
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+/// Main function for the `cargo-submodulize` tool.
+/// It parses command-line arguments, loads a persistent cache,
+/// processes Cargo.toml files to vendor dependencies as submodules,
+/// saves the updated cache, and generates a report of processed crates.
+fn main() -> Result<()> {
     let cli = Cli::parse();
-    let cargo_toml_path = cli.path.unwrap_or_else(|| "Cargo.toml".to_string());
-    let mut doc = std::fs::read_to_string(&cargo_toml_path)?.parse::<DocumentMut>()?;
-
     let client = Client::new();
+    let mut cache: HashMap<String, CrateResponse> = load_cache();
+    let mut processed_crates_info: Vec<ProcessedCrateInfo> = Vec::new();
+    let mut error_count = 0; // Initialize error count
 
-    if let Some(deps) = doc["dependencies"].as_table_mut() {
-        for (name, item) in deps.iter_mut() {
-            println!("Processing dependency: {}", name);
-
-            let version = get_version(item);
-
-            let url = format!("https://crates.io/api/v1/crates/{}", name);
-            let res = client.get(&url).header("User-Agent", "cargo-submodulize").send()?;
-            
-            if res.status().is_success() {
-                let crate_response: CrateResponse = res.json()?;
-                if let Some(repo) = crate_response.crate_data.repository {
-                    println!("Found repository: {}", repo);
-
-                    let vendor_path = format!("vendor/{}", name);
-                    let status = Command::new("git")
-                        .arg("submodule")
-                        .arg("add")
-                        .arg(&repo)
-                        .arg(&vendor_path)
-                        .stdout(Stdio::null())
-                        .stderr(Stdio::null())
-                        .status()?;
-
-                    if status.success() {
-                        println!("Added submodule for {}", name);
-
-                        if let Some(version) = version {
-                            checkout_tag(name, &vendor_path, &version)?;
-                        }
-
-                        *item = value({
-                            let mut new_item = toml_edit::InlineTable::new();
-                            new_item.insert("path", toml_edit::Value::String(toml_edit::Formatted::new(vendor_path.clone())));
-                            new_item
-                        });
-                    } else {
-                        eprintln!("Failed to add submodule for {}. Git command exited with status: {}", name, status);
-                    }
-                } else {
-                    eprintln!("Repository not found for crate: {}", name);
-                }
+    let cargo_toml_paths: Vec<String> = if let Some(scan_file_list_path) = cli.scan_file_list {
+        std::fs::read_to_string(&scan_file_list_path)?
+            .lines()
+            .filter(|s| !s.is_empty())
+            .map(|s| s.to_string())
+            .collect()
+    } else if let Some(dir_path) = cli.dir {
+        if !cli.recursive {
+            // Only look for Cargo.toml in the specified directory
+            let cargo_toml_path = format!("{}/Cargo.toml", dir_path);
+            if std::path::Path::new(&cargo_toml_path).exists() {
+                vec![cargo_toml_path]
             } else {
-                eprintln!("Failed to fetch crate info for: {}. Status: {}", name, res.status());
+                vec![]
+            }
+        } else {
+            // Recursively find all Cargo.toml files
+            let mut paths = Vec::new();
+            for entry in walkdir::WalkDir::new(dir_path) {
+                let entry = entry?;
+                if entry.file_type().is_file() && entry.file_name() == "Cargo.toml" {
+                    paths.push(entry.path().to_string_lossy().to_string());
+                }
+            }
+            paths
+        }
+    } else {
+        // Default to current directory's Cargo.toml
+        vec!["Cargo.toml".to_string()]
+    };
+
+    for cargo_toml_path in cargo_toml_paths {
+        println!("Processing Cargo.toml: {}", cargo_toml_path);
+        let metadata = cargo_metadata::MetadataCommand::new().exec()?;
+        let result = process_cargo_toml(&cargo_toml_path, cli.dry_run, &client, &metadata, &mut cache);
+        match result {
+            Ok(results) => {
+                processed_crates_info.extend(results);
+            },
+            Err(e) => {
+                eprintln!("Error processing {}: {}", cargo_toml_path, e);
+                error_count += 1;
+                if let Some(max_errors) = cli.max_errors {
+                    if error_count >= max_errors {
+                        eprintln!("Max errors ({}) reached. Stopping.", max_errors);
+                        break;
+                    }
+                }
             }
         }
     }
 
-    std::fs::write(&cargo_toml_path, doc.to_string())?;
-    println!("Successfully updated Cargo.toml");
+    save_cache(&cache)?;
 
-    Ok(())
-}
-
-fn get_version(item: &Item) -> Option<String> {
-    if let Some(s) = item.as_str() {
-        return Some(s.to_string());
-    } else if let Some(t) = item.as_inline_table() {
-        if let Some(v) = t.get("version") {
-            return v.as_str().map(|s| s.to_string());
-        }
-    }
-    None
-}
-
-fn checkout_tag(name: &str, path: &str, version: &str) -> Result<(), Box<dyn std::error::Error>> {
-    let tags_output = Command::new("git")
-        .arg("-C")
-        .arg(path)
-        .arg("tag")
-        .arg("-l")
-        .output()?;
-
-    let tags = String::from_utf8(tags_output.stdout)?;
-    let mut found_tag = None;
-
-    let possible_tags = [
-        format!("v{}", version),
-        version.to_string(),
-        format!("{}-{}", name, version),
-    ];
-
-    for tag in tags.lines() {
-        if possible_tags.contains(&tag.to_string()) {
-            found_tag = Some(tag.to_string());
-            break;
-        }
-    }
-
-    if let Some(tag) = found_tag {
-        println!("Found tag {} for version {}, checking out.", tag, version);
-        let status = Command::new("git")
-            .arg("-C")
-            .arg(path)
-            .arg("checkout")
-            .arg(&tag)
-            .stdout(Stdio::null())
-            .stderr(Stdio::null())
-            .status()?;
-
-        if !status.success() {
-            eprintln!("Failed to checkout tag {} for {}.", tag, name);
-        }
+    // Generate report
+    println!("\n--- Submodulize Report ---");
+    if processed_crates_info.is_empty() {
+        println!("No crates processed or no dependencies found.");
     } else {
-        eprintln!("Could not find a matching tag for version {} of {}. Please check the repository's tags.", version, name);
+        println!("{:<30} {:<15} {:<50} {:<15}", "Crate Name", "Version", "Repository", "Submodule Status");
+        println!("{:-<30} {:-<15} {:-<50} {:-<15}", "", "", "", "");
+        for info in processed_crates_info {
+            println!("{:<30} {:<15} {:<50} {:<15}",
+                     info.name,
+                     info.version.unwrap_or_else(|| "N/A".to_string()),
+                     info.repository.unwrap_or_else(|| "N/A".to_string()),
+                     if info.submodule_added { "Added/Updated" } else { "Skipped" });
+        }
     }
 
     Ok(())
 }
+
